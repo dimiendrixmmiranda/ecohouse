@@ -3,6 +3,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --amarelo: #FFBF00;
+  --branco: #EEEEEE;
+  --verde-1: #6FCF97;
+  --verde-2: #2FA084;
+  --verde-3: #1F6F5F;
+  --cinza: #151f25;
 }
 
 @theme inline {
@@ -10,6 +16,20 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* cores */
+  --color-amarelo: var(--amarelo);
+  --color-branco: var(--branco);
+  --color-verde-1: var(--verde-1);
+  --color-verde-2: var(--verde-2);
+  --color-verde-3: var(--verde-3);
+  --color-cinza: var(--cinza);
+
+  /* fontes */
+  --font-bebas-neue: var(--font-bebas-neue);
+  --font-koulen: var(--font-koulen);
+  --font-poppins: var(--font-poppins);
+  --font-oswald: var(--font-oswald);
 }
 
 @media (prefers-color-scheme: dark) {
