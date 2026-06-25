@@ -28,25 +28,9 @@ export default function Funcionamento() {
             description: "Acompanhe seus dados e reduza sua conta de luz.",
         },
     ];
-    const gerarCampo = (number: string, icone: React.ReactNode, titulo: string, descricao: string) => {
-        return (
-            <li className="flex flex-col justify-center items-center gap-2">
-                <div className="w-7 h-7 bg-verde-3 rounded-full flex justify-center items-center">
-                    1
-                </div>
-                <div className="p-3 text-4xl bg-verde-2 rounded-full w-fit">
-                    <FaHouseChimney />
-                </div>
-                <div className="flex flex-col justify-center items-center">
-                    <h3 className="text-lg font-bold">Cadastre sua casa</h3>
-                    <span>Adicione os comodos da sua residência</span>
-                </div>
-            </li>
-        )
-    }
 
     return (
-        <div>
+        <section className="flex flex-col gap-4">
             <div className="flex flex-col items-center gap-2">
                 <h2 className="text-4xl font-oswald">Como Funciona?</h2>
                 <span>Em poucos passos, você tem controle total de energia da sua casa.</span>
@@ -86,7 +70,7 @@ export default function Funcionamento() {
                                         ${activeStep !== null &&
                                         index <= activeStep
                                         ? "bg-verde-3"
-                                        : "bg-zinc-300"
+                                        : "bg-verde-2"
                                     }
                                 `}
                             >
@@ -118,6 +102,6 @@ export default function Funcionamento() {
                     ))}
                 </ul>
             </div>
-        </div>
+        </section>
     )
 }

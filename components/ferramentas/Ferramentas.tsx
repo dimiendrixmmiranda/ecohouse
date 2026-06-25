@@ -15,7 +15,7 @@ export default function Ferramentas() {
         )
     }
     return (
-        <section className="bg-verde-1/20 mx-4 rounded-xl p-4 px-6">
+        <section className="bg-verde-1/20 rounded-xl p-4 px-6">
             <ul className="grid grid-cols-5 gap-6">
                 {gerarCampo(<MdOutlineEnergySavingsLeaf />, "Monitoramento Inteligente", "Acompanhe o consumo de cada cômodo e equipamento em tempo real.")}
                 {gerarCampo(<FaFire />, "Mapa de Calor", "Visualize onde sua energia é mais utilizada e indentifique disperdícios.")}
