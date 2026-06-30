@@ -29,7 +29,7 @@ export default function Home() {
                     </ul>
                 </div>
                 <div className="grid grid-cols-2 gap-4 mx-4">
-                    <Link href={'/'} className="flex items-center gap-2 border border-verde-2 p-2 rounded-xl bg-verde text-branco bg-verde-2 hover:bg-branco hover:text-verde-2 transition-all duration-300">
+                    <Link href={'/simulacao'} className="flex items-center gap-2 border border-verde-2 p-2 rounded-xl bg-verde text-branco bg-verde-2 hover:bg-branco hover:text-verde-2 transition-all duration-300">
                         <SiAffinity />
                         <span>Começar Gratuitamente</span>
                     </Link>

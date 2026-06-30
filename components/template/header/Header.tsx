@@ -19,7 +19,7 @@ export default function Header() {
         const ativo = pathname === path;
 
         return `
-        flex items-center gap-1 p-2 py-1 text-sm lg:text-lg 
+        flex items-center gap-1 p-2 py-1 text-sm lg:text-lg transition-all duration-500
         ${ativo
                 ? 'scale-105 border-b border-verde-2 text-verde-2'
                 : 'hover:scale-105 hover:border-b hover:border-verde-2'
