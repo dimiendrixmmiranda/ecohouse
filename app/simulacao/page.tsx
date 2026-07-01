@@ -4,8 +4,12 @@ import { useLocalidades } from "@/hooks/useLocalidades";
 import { useState } from "react";
 import { FaRegSave } from "react-icons/fa";
 import { FaCheck, FaLeaf } from "react-icons/fa6";
+import { GoPlus } from "react-icons/go";
 import { IoHomeOutline } from "react-icons/io5";
 import { LuSofa } from "react-icons/lu";
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
+import { RiSofaLine } from "react-icons/ri";
 
 export default function Page() {
     const {
@@ -16,12 +20,17 @@ export default function Page() {
         buscarCidades,
     } = useLocalidades();
 
+    const [visible, setVisible] = useState(false);
+
     const [estado, setEstado] = useState("");
     const [cidade, setCidade] = useState("");
     const [nomeDaResidencia, setNomeDaResidencia] = useState("")
     const [tipoDeResidencia, setTipoDeResidencia] = useState("")
     const [qtdeDeMoradores, setQtdeDeMoradores] = useState("")
     const [tarifaDeEnergia, setTarifaDeEnergia] = useState("")
+
+    const [nomeDoComodo, setNomeDoComodo] = useState("")
+
     return (
         <Template>
             <div className="text-black max-w-[1440px] mx-auto p-4 flex flex-col gap-4">
@@ -165,12 +174,175 @@ export default function Page() {
                         </div>
                     </div>
                 </div>
-                <div className="border border-zinc-400 rounded-xl p-4">
+                <div className="border border-zinc-400 rounded-xl p-4 flex justify-between w-full">
                     <div className="flex items-center gap-2">
                         <LuSofa className="text-verde-3 text-2xl" />
                         <h3 className="font-bold text-xl">Cômodos da Residência</h3>
                     </div>
+                    <div>
+                        <button onClick={() => setVisible(true)} className="flex items-center gap-1 bg-verde-2 p-2 rounded-xl font-bold text-white text-shadow-[1px_1px_2px_black] cursor-pointer">
+                            <GoPlus className="text-white text-lg"/>
+                            <p>Adicionar Comodo</p>
+                        </button>
+                    </div>
+                    <Dialog header={<div><h2 className="font-oswald text-2xl font-bold">Adicionar Cômodo</h2></div>} visible={visible} className="w-[90%] max-w-[700px] bg-zinc-200 p-4 rounded-xl text-black shadow-[0_0_2px_1px_black]" onHide={() => { if (!visible) return; setVisible(false); }}>
+                        <div className="flex flex-col gap-4">
+                            <div className="flex flex-col gap-1">
+                                <p className="font-bold">Nome do cômodo:</p>
+                                <div className="relative">
+                                    <input className="w-full h-[40px] p-2 pl-12 rounded-lg border border-zinc-400" type="text" name="nomeDoComod" id="nomeDoComodo" value={nomeDoComodo} onChange={(e) => setNomeDoComodo(e.target.value)} />
+                                    <div className="absolute top-0 left-0 text-3xl p-1 border-r border-zinc-400">
+                                        <RiSofaLine />
+                                    </div>
+                                </div>
+                                <span>Digite o nome do cômodo que deseja adicionar</span>
+                            </div>
+                            <div className="flex flex-col">
+                                <p className="font-bold">Ícone do cômodo:</p>
+                                <ul className="grid grid-cols-10">
+                                    <li>
+                                        <button className="border border-verde-3 text-verde-3 bg-verde-3/20 text-4xl p-2 rounded-xl">
+                                            <RiSofaLine />
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
+                                            <RiSofaLine />
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
+                                            <RiSofaLine />
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
+                                            <RiSofaLine />
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
+                                            <RiSofaLine />
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
+                                            <RiSofaLine />
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
+                                            <RiSofaLine />
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
+                                            <RiSofaLine />
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
+                                            <RiSofaLine />
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
+                                            <RiSofaLine />
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <p className="font-bold">Sugestões de cômodos:</p>
+                                <ul className="flex flex-wrap gap-2">
+                                    <li>
+                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                            <p>Escritório</p>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                            <p>Área Gourmet</p>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                            <p>Garagem</p>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                            <p>Closet</p>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                            <p>Dispensa</p>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                            <p>Varanda</p>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                            <p>Quintal</p>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                            <p>Sala</p>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                            <p>Cozinha</p>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                            <p>Banheiro</p>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                            <p>Quarto</p>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                            <p>Lavanderia</p>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className="flex items-center gap-2 bg-verde-3 text-white p-2 rounded-xl">
+                                <FaLeaf className="text-4xl" />
+                                <div>
+                                    <h3 className="font-bold text-lg leading-5">Dica</h3>
+                                    <span>
+                                        Você pode editar ou excluir os cômodos a qualquer momento.
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <button className="border border-zinc-400 rounded-xl p-1 text-xl">
+                                    Cancelar
+                                </button>
+                                <button className="border border-zinc-400 rounded-xl p-1 text-xl bg-verde-3 text-white">
+                                    Adicionar Cômodo
+                                </button>
+                            </div>
+                        </div>
+                    </Dialog>
                 </div>
+                <div className="border border-zinc-400 rounded-xl p-4 flex justify-between w-full">
+                    <div className="flex items-center gap-2">
+                        <LuSofa className="text-verde-3 text-2xl" />
+                        <h3 className="font-bold text-xl">Cômodos da Residência</h3>
+                    </div>
+                    </div>
             </div>
         </Template>
     )
