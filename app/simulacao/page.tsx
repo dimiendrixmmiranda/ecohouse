@@ -1,15 +1,20 @@
 'use client'
 import Template from "@/components/template/Template";
 import { useLocalidades } from "@/hooks/useLocalidades";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { FaRegSave } from "react-icons/fa";
-import { FaCheck, FaLeaf } from "react-icons/fa6";
+import { FaCar, FaCheck, FaDeleteLeft, FaLeaf, FaPlus, FaShower } from "react-icons/fa6";
 import { GoPlus } from "react-icons/go";
-import { IoHomeOutline } from "react-icons/io5";
+import { IoHomeOutline, IoShirtOutline } from "react-icons/io5";
 import { LuSofa } from "react-icons/lu";
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
-import { RiSofaLine } from "react-icons/ri";
+import { RiPlantLine, RiSofaLine } from "react-icons/ri";
+import { GiBroom, GiCookingPot } from "react-icons/gi";
+import { SiGoogleclassroom } from "react-icons/si";
+import { PiTelevisionSimple } from "react-icons/pi";
+import { MdOutlineMonitor } from "react-icons/md";
+import { IconType } from "react-icons";
 
 export default function Page() {
     const {
@@ -19,6 +24,19 @@ export default function Page() {
         loadingCidades,
         buscarCidades,
     } = useLocalidades();
+
+    const ICONES_COMODOS: { id: string; icon: IconType }[] = [
+        { id: "sofa", icon: RiSofaLine },
+        { id: "limpeza", icon: GiBroom },
+        { id: "escritorio", icon: SiGoogleclassroom },
+        { id: "cozinha", icon: GiCookingPot },
+        { id: "banheiro", icon: FaShower },
+        { id: "lavanderia", icon: IoShirtOutline },
+        { id: "tv", icon: PiTelevisionSimple },
+        { id: "computador", icon: MdOutlineMonitor },
+        { id: "garagem", icon: FaCar },
+        { id: "jardim", icon: RiPlantLine },
+    ];
 
     const [visible, setVisible] = useState(false);
 
@@ -30,6 +48,14 @@ export default function Page() {
     const [tarifaDeEnergia, setTarifaDeEnergia] = useState("")
 
     const [nomeDoComodo, setNomeDoComodo] = useState("")
+
+    const [iconeComodo, setIconeComodo] = useState("sofa")
+
+    const IconeSelecionado = useMemo(() => {
+        return ICONES_COMODOS.find(
+            ({ id }) => id === iconeComodo
+        )?.icon;
+    }, [iconeComodo]);
 
     return (
         <Template>
@@ -174,14 +200,14 @@ export default function Page() {
                         </div>
                     </div>
                 </div>
-                <div className="border border-zinc-400 rounded-xl p-4 flex justify-between w-full">
+                <div className="border border-zinc-400 rounded-xl p-4 grid grid-cols-[1fr_200px] w-full">
                     <div className="flex items-center gap-2">
                         <LuSofa className="text-verde-3 text-2xl" />
                         <h3 className="font-bold text-xl">Cômodos da Residência</h3>
                     </div>
                     <div>
                         <button onClick={() => setVisible(true)} className="flex items-center gap-1 bg-verde-2 p-2 rounded-xl font-bold text-white text-shadow-[1px_1px_2px_black] cursor-pointer">
-                            <GoPlus className="text-white text-lg"/>
+                            <GoPlus className="text-white text-lg" />
                             <p>Adicionar Comodo</p>
                         </button>
                     </div>
@@ -191,127 +217,106 @@ export default function Page() {
                                 <p className="font-bold">Nome do cômodo:</p>
                                 <div className="relative">
                                     <input className="w-full h-[40px] p-2 pl-12 rounded-lg border border-zinc-400" type="text" name="nomeDoComod" id="nomeDoComodo" value={nomeDoComodo} onChange={(e) => setNomeDoComodo(e.target.value)} />
-                                    <div className="absolute top-0 left-0 text-3xl p-1 border-r border-zinc-400">
-                                        <RiSofaLine />
+                                    <div className="absolute top-0 left-0 text-2xl p-2 border-r border-zinc-400">
+                                        {IconeSelecionado && <IconeSelecionado />}
                                     </div>
+                                    <button onClick={() => setNomeDoComodo('')} className="absolute bg-red-600 top-0 right-0 text-3xl h-full rounded-lg px-3 text-white drop-shadow-[1px_1px_2px_black]">
+                                        <FaDeleteLeft />
+                                    </button>
                                 </div>
                                 <span>Digite o nome do cômodo que deseja adicionar</span>
                             </div>
-                            <div className="flex flex-col">
+                            {/* Icone comodo */}
+                            <div className="flex flex-col gap-2">
                                 <p className="font-bold">Ícone do cômodo:</p>
-                                <ul className="grid grid-cols-10">
-                                    <li>
-                                        <button className="border border-verde-3 text-verde-3 bg-verde-3/20 text-4xl p-2 rounded-xl">
-                                            <RiSofaLine />
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
-                                            <RiSofaLine />
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
-                                            <RiSofaLine />
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
-                                            <RiSofaLine />
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
-                                            <RiSofaLine />
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
-                                            <RiSofaLine />
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
-                                            <RiSofaLine />
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
-                                            <RiSofaLine />
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
-                                            <RiSofaLine />
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button className="border border-zinc-400 text-zinc-700 bg-zinc-200 text-4xl p-2 rounded-xl">
-                                            <RiSofaLine />
-                                        </button>
-                                    </li>
+
+                                <ul className="grid grid-cols-5 gap-3">
+                                    {ICONES_COMODOS.map(({ id, icon: Icon }) => (
+                                        <li key={id}>
+                                            <button
+                                                type="button"
+                                                onClick={() => setIconeComodo(id)}
+                                                className={`
+                                                        flex justify-center items-center
+                                                        text-4xl
+                                                        p-2
+                                                        rounded-xl
+                                                        transition-all
+                                                        duration-200
+                                                        border
+                                                        ${iconeComodo === id
+                                                        ? "border-verde-3 bg-verde-3/20 text-verde-3"
+                                                        : "border-zinc-400 bg-zinc-200 text-zinc-700 hover:border-verde-3 hover:text-verde-3"
+                                                    }
+                                                `}
+                                            >
+                                                <Icon />
+                                            </button>
+                                        </li>
+                                    ))}
                                 </ul>
                             </div>
+                            {/* Sugestoes comodo */}
                             <div className="flex flex-col gap-2">
                                 <p className="font-bold">Sugestões de cômodos:</p>
                                 <ul className="flex flex-wrap gap-2">
                                     <li>
-                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                        <button onClick={() => setNomeDoComodo('Escritorio')} className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl hover:bg-verde-3 hover:text-white duration-300 transition-all">
                                             <p>Escritório</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                        <button onClick={() => setNomeDoComodo('Área Gourmet')} className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl hover:bg-verde-3 hover:text-white duration-300 transition-all">
                                             <p>Área Gourmet</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                        <button onClick={() => setNomeDoComodo('Garagem')} className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl hover:bg-verde-3 hover:text-white duration-300 transition-all">
                                             <p>Garagem</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                        <button onClick={() => setNomeDoComodo('Closet')} className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl hover:bg-verde-3 hover:text-white duration-300 transition-all">
                                             <p>Closet</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                        <button onClick={() => setNomeDoComodo('Dispensa')} className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl hover:bg-verde-3 hover:text-white duration-300 transition-all">
                                             <p>Dispensa</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                        <button onClick={() => setNomeDoComodo('Varanda')} className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl hover:bg-verde-3 hover:text-white duration-300 transition-all">
                                             <p>Varanda</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                        <button onClick={() => setNomeDoComodo('Quintal')} className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl hover:bg-verde-3 hover:text-white duration-300 transition-all">
                                             <p>Quintal</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                        <button onClick={() => setNomeDoComodo('Sala')} className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl hover:bg-verde-3 hover:text-white duration-300 transition-all">
                                             <p>Sala</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                        <button onClick={() => setNomeDoComodo('Cozinha')} className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl hover:bg-verde-3 hover:text-white duration-300 transition-all">
                                             <p>Cozinha</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                        <button onClick={() => setNomeDoComodo('Banheiro')} className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl hover:bg-verde-3 hover:text-white duration-300 transition-all">
                                             <p>Banheiro</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                        <button onClick={() => setNomeDoComodo('Quarto')} className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl hover:bg-verde-3 hover:text-white duration-300 transition-all">
                                             <p>Quarto</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl">
+                                        <button onClick={() => setNomeDoComodo('Lavanderia')} className="border border-verde-3 text-verde-3 px-2 py-1 rounded-xl hover:bg-verde-3 hover:text-white duration-300 transition-all">
                                             <p>Lavanderia</p>
                                         </button>
                                     </li>
@@ -336,13 +341,33 @@ export default function Page() {
                             </div>
                         </div>
                     </Dialog>
+                    <div className="col-span-2">
+                        <ul className="grid gap-4 xl:grid-cols-2">
+                            <li className="flex items-center w-full gap-4 bg-verde-1/20 p-2 rounded-xl">
+                                <div className="text-4xl">
+                                    <RiSofaLine />
+                                </div>
+                                <div>
+                                    <h3 className="text-xl leading-5">Cômodo: <b>Sala</b>(0)</h3>
+                                    <span className="text-sm leading-4">Gerencie os equipamentos deste cômodo</span>
+                                </div>
+                                <div className="ml-auto">
+                                    <button className="flex items-center bg-verde-3 text-white text-lg px-4 py-2 rounded-xl">
+                                        <FaPlus />
+                                        <span>Adicionar equipamento</span>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div className="border border-zinc-400 rounded-xl p-4 flex justify-between w-full">
+                <div className="border border-zinc-400 rounded-xl p-4 flex flex-col justify-between w-full">
                     <div className="flex items-center gap-2">
                         <LuSofa className="text-verde-3 text-2xl" />
-                        <h3 className="font-bold text-xl">Cômodos da Residência</h3>
+                        <h3 className="font-bold text-xl">Equipamentos por Cômodo</h3>
                     </div>
-                    </div>
+
+                </div>
             </div>
         </Template>
     )
