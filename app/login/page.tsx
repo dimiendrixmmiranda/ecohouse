@@ -2,10 +2,58 @@
 
 import Template from "@/components/template/Template";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { BsLeaf } from "react-icons/bs";
+import { FaArrowRight } from "react-icons/fa6";
 import { LuTrees } from "react-icons/lu";
 
 export default function Page() {
+    const router = useRouter();
+
+    const [email, setEmail] = useState("")
+    const [senha, setSenha] = useState("")
+    const [lembrar, setLembrar] = useState(false)
+
+    const [nome, setNome] = useState('')
+    const [confirmarSenha, setConfirmarSenha] = useState('')
+    const [sexo, setSexo] = useState('')
+    const [modo, setModo] = useState<'login' | 'create'>('login')
+    const [dataDeNascimento, setDataDeNascimento] = useState('')
+
+    const criarConta = async () => {
+        try {
+            const response = await fetch("/api/auth/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nome,
+                    email,
+                    senha,
+                    sexo,
+                    dataDeNascimento,
+                }),
+            })
+
+            const data = await response.json()
+
+            if (!response.ok) {
+                alert(data.message)
+                return
+            }
+
+            // Cadastro realizado com sucesso
+            router.push("/usuario")
+
+        } catch (error) {
+            console.error(error)
+            alert("Erro ao criar conta.")
+        }
+    }
+
     return (
         <Template>
             <div className="text-white font-oswald bg-verde-3 min-h-[80vh] flex justify-center items-center">
@@ -79,14 +127,113 @@ export default function Page() {
                             </div>
                             <div className="relative">
                                 <div className="flex items-center gap-2 p-4 bg-verde-3/50 rounded-xl w-fit">
-                                    <LuTrees  className="text-5xl"/>
+                                    <LuTrees className="text-5xl" />
                                     <p className="max-w-[230px] text-lg">Cada escolha consciente hoje, <b className="text-verde-1">constrói um amanhã melhor.</b></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div>
-                        aqui
+                        <div>
+                            <div>
+                                <h3>Bem vindo de volta! 👋</h3>
+                                <span>
+                                    Entre na sua conta para continuar cuidando do seu lar e do planeta.
+                                </span>
+                            </div>
+                            <div>
+                                <button onClick={() => setModo('login')} className={`${modo == 'login' ? 'bg-verde-1' : ''}`}>
+                                    Entrar
+                                </button>
+                                <button onClick={() => setModo('create')} className={`${modo == 'create' ? 'bg-verde-1' : ''}`}>
+                                    Cadastre-se
+                                </button>
+                            </div>
+                        </div>
+                        {
+                            modo === 'login' ? (
+                                <div>
+                                    <div>
+                                        <div>
+                                            <label htmlFor="email">Email</label>
+                                            <input type="text" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="senha">senha</label>
+                                            <input type="text" name="senha" id="senha" value={senha} onChange={(e) => setSenha(e.target.value)} />
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-2">
+                                                <input
+                                                    type="checkbox"
+                                                    id="lembrar"
+                                                    name="lembrar"
+                                                    checked={lembrar}
+                                                    onChange={(e) => setLembrar(e.target.checked)}
+                                                />
+                                                <label htmlFor="lembrar">
+                                                    Lembrar de mim
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <Link href={'/'}>Esqueceu sua senha?</Link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button>
+                                            <FaArrowRight />
+                                            <p>Entrar na minha conta</p>
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : ''
+                        }
+                        {
+                            modo === 'create' ? (
+                                <div>
+                                    <div>
+                                        <div>
+                                            <label htmlFor="nome">Nome</label>
+                                            <input type="text" name="nome" id="nome" value={nome} onChange={(e) => setNome(e.target.value)} />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="email">Email</label>
+                                            <input type="text" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                        </div>
+                                        <select
+                                            id="sexo"
+                                            name="sexo"
+                                            value={sexo}
+                                            onChange={(e) => setSexo(e.target.value)}
+                                        >
+                                            <option value="">Selecione</option>
+                                            <option value="masculino">Masculino</option>
+                                            <option value="feminino">Feminino</option>
+                                            <option value="prefiro-nao-dizer">Prefiro não dizer</option>
+                                        </select>
+                                        <div>
+                                            <label htmlFor="dataDeNascimento">Data de Nascimento</label>
+                                            <input type="date" name="dataDeNascimento" id="dataDeNascimento" value={dataDeNascimento} onChange={(e) => setDataDeNascimento(e.target.value)} />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="senha">Senha</label>
+                                            <input type="text" name="senha" id="senha" value={senha} onChange={(e) => setSenha(e.target.value)} />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="confirmarSenha">Confirmar Senha</label>
+                                            <input type="text" name="confirmarSenha" id="confirmarSenha" value={confirmarSenha} onChange={(e) => setConfirmarSenha(e.target.value)} />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button onClick={criarConta}>
+                                            <FaArrowRight />
+                                            <p>Criar Minha conta</p>
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : ''
+                        }
                     </div>
                 </div>
             </div>
