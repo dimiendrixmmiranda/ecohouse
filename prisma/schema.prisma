@@ -17,4 +17,33 @@ model User {
   imagem             String?
   criadoEm           DateTime @default(now())
   atualizadoEm       DateTime @updatedAt
+
+  comodos            Comodo[]
+}
+
+model Comodo {
+  id          String   @id @default(cuid())
+  nome        String
+  icone       String
+  criadoEm    DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+  usuarioId   String
+  usuario     User @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  equipamentos Equipamento[]
+}
+
+model Equipamento {
+  id          String @id @default(cuid())
+
+  nome        String
+  potencia    Int
+  quantidade  Int
+  horasDia    Float
+  diasMes     Int
+
+  criadoEm    DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  comodoId    String
+  comodo      Comodo @relation(fields: [comodoId], references: [id], onDelete: Cascade)
 }

@@ -28,24 +28,30 @@ export default function Home() {
                         </li>
                     </ul>
                 </div>
-                <div className="grid grid-cols-2 gap-4 mx-4">
-                    <Link href={'/simulacao'} className="flex items-center gap-2 border border-verde-2 p-2 rounded-xl bg-verde text-branco bg-verde-2 hover:bg-branco hover:text-verde-2 transition-all duration-300">
+                <div className="grid grid-cols-2 gap-4">
+                    <Link href={'/simulacao'} className="flex items-center gap-2 border border-verde-2 p-2 rounded-xl bg-verde text-branco bg-verde-2 hover:bg-branco hover:text-verde-2 transition-all duration-300 hover:scale-105">
                         <SiAffinity />
                         <span>Começar Gratuitamente</span>
                     </Link>
-                    <Link href={'/'} className="flex items-center gap-2 border border-verde-2 p-2 rounded-xl hover:bg-verde-2 hover:text-white transition-all duration-300">
+                    <Link href={'/'} className="flex items-center gap-2 border border-verde-2 p-2 rounded-xl hover:bg-verde-2 hover:text-white transition-all duration-300 hover:scale-105">
                         <FaRegPlayCircle />
                         <span>Ver demonstração</span>
                     </Link>
                 </div>
                 <div className="grid grid-cols-[auto_1fr] gap-4">
                     <div className="flex">
-                        <div className="w-12 h-12 rounded-full border border-amber-600 bg-green-400"></div>
-                        <div className="w-12 h-12 rounded-full border border-amber-600 bg-green-400 -ml-2.5"></div>
-                        <div className="w-12 h-12 rounded-full border border-amber-600 bg-green-400 -ml-2.5"></div>
+                        <div className="relative w-12 h-12 overflow-hidden rounded-full border bg-green-400">
+                            <Image alt="pessoa" src={'/assets/pessoas/pessoa-1.avif'} fill className="object-cover"/>
+                        </div>
+                        <div className="relative w-12 h-12 overflow-hidden rounded-full border bg-green-400 -ml-2.5">
+                            <Image alt="pessoa" src={'/assets/pessoas/pessoa-2.avif'} fill className="object-cover"/>
+                        </div>
+                        <div className="relative w-12 h-12 overflow-hidden rounded-full border bg-green-400 -ml-2.5">
+                            <Image alt="pessoa" src={'/assets/pessoas/pessoa-3.avif'} fill className="object-cover"/>
+                        </div>
                     </div>
                     <div className="text-lg max-w-[300px]">
-                        <p className="leading-">Mais de 1200 famílias ja estão economizando com o EcoHouse 💚</p>
+                        <p className="leading-5.5">Mais de 1200 famílias ja estão economizando com o EcoHouse 💚</p>
                     </div>
                 </div>
             </div>

@@ -1,8 +1,10 @@
+import { useUsuario } from "@/hooks/useUsuarios";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { BiBox } from "react-icons/bi";
+import { IoLogIn } from "react-icons/io5";
 
 type MenuActive =
     | "recursos"
@@ -12,6 +14,7 @@ type MenuActive =
     | "sobre"
 
 export default function Header() {
+    const { usuario } = useUsuario()
     const [menuActive, setMenuActive] = useState<MenuActive | null>(null);
     const pathname = usePathname()
 
@@ -27,10 +30,8 @@ export default function Header() {
     `;
     }
 
-    console.log(pathname)
-
     return (
-        <header className="bg-cinza p-2 font-oswald flex items-center gap-4 md:grid md:grid-cols-[auto_auto_36px]">
+        <header className="bg-cinza p-2 font-oswald flex items-center gap-4 md:grid md:grid-cols-[auto_auto_180px]">
             <Link href={'/'} className="flex items-center gap-2">
                 <div className="relative w-12 h-9 lg:w-14 lg:h-12">
                     <Image alt="Logo da Ecohouse" src={'/logo/logo-ecohouse.png'} fill className="object-cover" />
@@ -72,10 +73,19 @@ export default function Header() {
                     </li>
                 </ul>
             </div>
-
-            <div className="flex justify-center items-center">
-                <div className="w-8 h-8 rounded-full bg-zinc-700"></div>
-            </div>
+            {
+                usuario != null ? (
+                    <div className="flex items-center gap-2">
+                        <div className="rounded-full bg-zinc-400 w-7 h-7"></div>
+                        <span className="text-lg">Bem vindo {usuario.nome.split(' ')[0]}</span>
+                    </div>
+                ): (
+                    <Link href={"/login"} className="flex gap-2 items-center justify-center bg-verde-2 rounded-xl p-2">
+                        <IoLogIn />
+                        <span>Entrar ou Criar Conta</span>
+                    </Link>
+                )
+            }
         </header>
     )
 }
